@@ -1,5 +1,7 @@
 import {
   Button,
+  FormLabel,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -7,6 +9,8 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Stack,
+  Switch,
   Text,
   useDisclosure,
 } from '@chakra-ui/react';
@@ -40,6 +44,11 @@ export const AddTask = () => {
           <ModalHeader>Modal Title</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
+            <Stack align="center" direction="row">
+              <Input variant="filled" placeholder="Description" />
+              <FormLabel htmlFor="isFocusable">Finished?</FormLabel>
+              <Switch size="lg" />
+            </Stack>
             <Text>Custom backdrop filters!</Text>
           </ModalBody>
           <ModalFooter>
