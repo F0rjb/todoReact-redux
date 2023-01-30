@@ -7,22 +7,22 @@ export const tasks = [
   {
     Id: 2,
     description: 'Do the laundry',
-    isDone: false,
+    isDone: true,
   },
   {
     Id: 3,
     description: 'Buy groceries',
-    isDone: false,
+    isDone: true,
   },
   {
     Id: 4,
     description: 'Pay bills',
-    isDone: false,
+    isDone: true,
   },
   {
     Id: 5,
     description: "Book a doctor's appointment",
-    isDone: false,
+    isDone: true,
   },
   {
     Id: 6,

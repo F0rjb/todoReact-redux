@@ -15,6 +15,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addTask } from './JS/actions/todoAction';
 
 export const AddTask = () => {
   const OverlayOne = () => (
@@ -23,10 +25,15 @@ export const AddTask = () => {
       backdropFilter="blur(10px) hue-rotate(90deg)"
     />
   );
-
+  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [overlay, setOverlay] = useState(<OverlayOne />);
+  const [description, setDescription] = useState('');
 
+  const handleAddTask = () => {
+    dispatch(addTask(description));
+    setDescription('');
+  };
   return (
     <>
       <Button
@@ -45,14 +52,22 @@ export const AddTask = () => {
           <ModalCloseButton />
           <ModalBody>
             <Stack align="center" direction="row">
-              <Input variant="filled" placeholder="Description" />
-              <FormLabel htmlFor="isFocusable">Finished?</FormLabel>
+              <Input
+                variant="filled"
+                type="text"
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+                placeholder="Description"
+              />
+
               <Switch size="lg" />
             </Stack>
             <Text>Custom backdrop filters!</Text>
           </ModalBody>
           <ModalFooter>
             <Button onClick={onClose}>Close</Button>
+
+            <Button onClick={handleAddTask}>Add</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

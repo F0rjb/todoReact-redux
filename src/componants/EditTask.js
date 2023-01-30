@@ -13,11 +13,14 @@ import {
   Switch,
   Text,
   Textarea,
+  useBoolean,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { editTask } from './JS/actions/todoAction';
 
-export const EditTask = () => {
+export const EditTask = ({ Id }) => {
   const OverlayOne = () => (
     <ModalOverlay
       bg="blackAlpha.300"
@@ -36,7 +39,18 @@ export const EditTask = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [overlay, setOverlay] = useState(<OverlayOne />);
+  const [flag, setFlag] = useBoolean();
+  const dispatch = useDispatch();
+  const task = useSelector(state => state.tasks.find(task => task.id === Id));
+  const [description, setDescription] = useState(task.description);
 
+  const handleEditTask = () => {
+    dispatch(editTask(Id, description));
+  };
+  const handleChange = e => setDescription(e.target.value);
+  if (!task) {
+    return <div>Task not found</div>;
+  }
   return (
     <>
       <Button
@@ -55,14 +69,20 @@ export const EditTask = () => {
           <ModalCloseButton />
           <ModalBody>
             <Stack align="center" direction="row">
-              <Input variant="filled" placeholder="Description" />
+              <Input
+                variant="filled"
+                type="text"
+                value={description}
+                onChange={handleChange}
+                placeholder="Description"
+              />
               <FormLabel htmlFor="isFocusable">Finished?</FormLabel>
               <Switch size="lg" />
             </Stack>
             <Text>Custom backdrop filters!</Text>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
+            <Button onClick={handleEditTask}>Close</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

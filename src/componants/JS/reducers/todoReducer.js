@@ -1,40 +1,52 @@
 import { tasks } from '../../data';
-import { FILTER, ADDTODO, EDITTASK } from '../actionsType/actionTypes';
+import {
+  FILTER,
+  ADDTODO,
+  EDITTASK,
+  RESET_FILTER,
+  ADD_TASK,
+  EDIT_TASK,
+} from '../actionsType/actionTypes';
 const initstate = {
   tasks: tasks,
+  isDone: false,
 };
 
 export function taskReducer(state = initstate, action) {
   switch (action.type) {
-    case ADDTODO:
+    case EDIT_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.map(task =>
+          task.id === action.id
+            ? { ...task, description: action.description }
+            : task
+        ),
+      };
+    case ADD_TASK:
       return {
         ...state,
         tasks: [
           ...state.tasks,
           {
             Id: state.tasks.length + 1,
-            description: action.payload.description,
-            isDone: action.payload.isDone,
+            description: action.description,
+            isDone: false,
           },
         ],
       };
+
     case FILTER:
       return {
         ...state,
-        tasks: state.tasks.filter(task => task.isDone === action.isDone),
+        tasks: state.tasks.filter(task => task.isDone === action.isDone).length
+          ? state.tasks.filter(task => task.isDone === action.isDone)
+          : state.tasks,
       };
-    case EDITTASK:
+    case RESET_FILTER:
       return {
         ...state,
-        tasks: state.tasks.map(task => {
-          if (task.Id === action.id) {
-            return {
-              ...task,
-              ...action.updates,
-            };
-          }
-          return task;
-        }),
+        task: initstate,
       };
     default:
       return state;
