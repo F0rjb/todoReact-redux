@@ -38,10 +38,10 @@ export const ListTask = () => {
     <div>
       <HStack spacing="24px">
         <CheckboxIcon />{' '}
-        <select name="Filter" onChange={handleSelect} id="cars">
+        <select name="Filter" onChange={handleSelect} id="states">
+          <option value="All">All</option>
           <option value="Done">Done</option>
           <option value="NotDone">Not Done</option>
-          <option value="All">All</option>
         </select>
       </HStack>
       {/* <Switch isChecked={isChecked} onChange={handleChange}></Switch> */}
