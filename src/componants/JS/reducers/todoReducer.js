@@ -10,7 +10,8 @@ import {
 } from '../actionsType/actionTypes';
 const initstate = {
   tasks: tasks,
-  isDone: false,
+  isDone: '',
+  isDoneEdit: false,
 };
 
 export function taskReducer(state = initstate, action) {
@@ -24,7 +25,7 @@ export function taskReducer(state = initstate, action) {
             ? {
                 ...task,
                 description: action.payload.description,
-                isDone: action.payload.isDone,
+                isDone: action.payload.isDoneEdit,
               }
             : task
         ),

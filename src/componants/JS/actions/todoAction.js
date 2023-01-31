@@ -10,9 +10,9 @@ export const addTask = description => ({
   type: ADD_TASK,
   description,
 });
-export const editTask = (id, description, isDone) => ({
+export const editTask = (id, description, isDoneEdit) => ({
   type: EDIT_TASK,
-  payload: { id, description, isDone },
+  payload: { id, description, isDoneEdit },
 });
 export const filter = isDone => {
   return { type: FILTER, isDone };

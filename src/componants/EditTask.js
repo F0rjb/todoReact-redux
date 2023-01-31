@@ -47,7 +47,7 @@ export const EditTask = ({ Id, description, isDone }) => {
   const [stateswitch, setswitch] = useState(isDone);
   const handleChange = e => setstateDescription(e.target.value);
   const handleSwitchChange = e => {
-    setswitch(e.target.value);
+    setswitch(!stateswitch);
   };
   const handleEditTask = () => {
     dispatch(editTask(Id, statedescription, stateswitch));
@@ -58,7 +58,7 @@ export const EditTask = ({ Id, description, isDone }) => {
       <Button
         ml="4"
         onClick={() => {
-          setOverlay(<OverlayTwo />);
+          setOverlay(<OverlayOne />);
           onOpen();
         }}
       >
