@@ -20,7 +20,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { editTask } from './JS/actions/todoAction';
 
-export const EditTask = ({ Id }) => {
+export const EditTask = ({ Id, description, isDone }) => {
   const OverlayOne = () => (
     <ModalOverlay
       bg="blackAlpha.300"
@@ -41,16 +41,18 @@ export const EditTask = ({ Id }) => {
   const [overlay, setOverlay] = useState(<OverlayOne />);
   const [flag, setFlag] = useBoolean();
   const dispatch = useDispatch();
-  const task = useSelector(state => state.tasks.find(task => task.id === Id));
-  const [description, setDescription] = useState(task.description);
 
-  const handleEditTask = () => {
-    dispatch(editTask(Id, description));
+  // const task = useSelector(state => state.tasks.find(task => task.id === Id));
+  const [statedescription, setstateDescription] = useState(description);
+  const [stateswitch, setswitch] = useState(isDone);
+  const handleChange = e => setstateDescription(e.target.value);
+  const handleSwitchChange = e => {
+    setswitch(e.target.value);
   };
-  const handleChange = e => setDescription(e.target.value);
-  if (!task) {
-    return <div>Task not found</div>;
-  }
+  const handleEditTask = () => {
+    dispatch(editTask(Id, statedescription, stateswitch));
+    onClose();
+  };
   return (
     <>
       <Button
@@ -72,17 +74,21 @@ export const EditTask = ({ Id }) => {
               <Input
                 variant="filled"
                 type="text"
-                value={description}
+                value={statedescription}
                 onChange={handleChange}
                 placeholder="Description"
               />
               <FormLabel htmlFor="isFocusable">Finished?</FormLabel>
-              <Switch size="lg" />
+              <Switch
+                size="lg"
+                value={stateswitch}
+                onChange={handleSwitchChange}
+              />
             </Stack>
             <Text>Custom backdrop filters!</Text>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={handleEditTask}>Close</Button>
+            <Button onClick={handleEditTask}>Edit</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

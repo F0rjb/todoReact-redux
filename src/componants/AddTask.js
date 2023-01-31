@@ -1,6 +1,7 @@
 import {
   Button,
   FormLabel,
+  HStack,
   Input,
   Modal,
   ModalBody,
@@ -33,6 +34,7 @@ export const AddTask = () => {
   const handleAddTask = () => {
     dispatch(addTask(description));
     setDescription('');
+    onClose();
   };
   return (
     <>
@@ -48,7 +50,7 @@ export const AddTask = () => {
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         {overlay}
         <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+          <ModalHeader>Add Todo</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack align="center" direction="row">
@@ -59,15 +61,13 @@ export const AddTask = () => {
                 onChange={e => setDescription(e.target.value)}
                 placeholder="Description"
               />
-
-              <Switch size="lg" />
             </Stack>
-            <Text>Custom backdrop filters!</Text>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-
-            <Button onClick={handleAddTask}>Add</Button>
+            <HStack spacing={5}>
+              <Button onClick={handleAddTask}>Add</Button>
+              <Button onClick={onClose}>Close</Button>
+            </HStack>
           </ModalFooter>
         </ModalContent>
       </Modal>
